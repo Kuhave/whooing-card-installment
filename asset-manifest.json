@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/whooing-card-installment/static/css/main.7df248aa.css",
+    "main.js": "/whooing-card-installment/static/js/main.4f5b2209.js",
+    "index.html": "/whooing-card-installment/index.html",
+    "main.7df248aa.css.map": "/whooing-card-installment/static/css/main.7df248aa.css.map",
+    "main.4f5b2209.js.map": "/whooing-card-installment/static/js/main.4f5b2209.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7df248aa.css",
+    "static/js/main.4f5b2209.js"
+  ]
+}
