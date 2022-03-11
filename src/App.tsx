@@ -1,6 +1,6 @@
 import "./App.css";
-import { message, Button, Col, Input, Layout, Row, Space, Tooltip, Typography, InputNumber, DatePicker } from "antd";
-import { each, map, pipe, sum, toArray, toAsync } from "@fxts/core";
+import { message, Button, Col, Input, Row, Typography, InputNumber, DatePicker, Radio, Space } from "antd";
+import { map, pipe, toArray, toAsync } from "@fxts/core";
 import { useEffect, useState } from "react";
 import { addMonths, format, parse, startOfDay } from "date-fns";
 
@@ -18,6 +18,8 @@ interface WhooingData {
 
 type CheckMode = "CLIPBOARD" | "TEMP" | "INPUT";
 
+type CalculateMode = "SHINHAN" | 'SHINHAN';
+
 function App() {
   const [postUrl, setPostUrl] = useState("");
   const [priceStr, setPriceStr] = useState("");
@@ -29,6 +31,8 @@ function App() {
   const [right, setRight] = useState("");
   const [memo, setMemo] = useState("");
   const [date, setDate] = useState<string | null>(null);
+
+  const [calculateMethod, setCalculateMethod] = useState<CalculateMode>("SHINHAN");
 
   const [debugStr, setDebugStr] = useState("");
   const [canContinueClipboard, setCanContinueClipboard] = useState(false);
@@ -174,24 +178,24 @@ function App() {
       <br />
       <br />
 
-      <h3>
-        {"POST URL 입력(후잉 입력 시 필수입니다.)"}
-        <br />
-        <a href="https://whooing.com/#main/setting">https://whooing.com/#main/setting</a>
-        <>
-          &nbsp;아래쪽의 <Text code>POST URL로 전달하기(키는 아무거나 무관)</Text> URL을 복사해서 아래에 붙여넣어주세요.
-        </>
-      </h3>
-      <Input
-        size="large"
-        status={isurlValid ? undefined : "warning"}
-        placeholder="POST URL"
-        width={12}
-        value={postUrl}
+      <h3>카드사 선택</h3>
+      <h4>
+        아래에 없는 카드사는
+        <a href="https://github.com/Kuhave/whooing-card-installment/issues"> 여기</a>에 제보해주시거나 이메일{" "}
+        <Text code>kuhave@gmail.com</Text>으로 메일 주시면 해당 카드사의 정책을 찾아보고 추가하겠습니다.
+      </h4>
+      <Radio.Group
         onChange={(e) => {
-          setPostUrl(e.target.value);
+          setCalculateMethod(e.target.value);
         }}
-      />
+        value={calculateMethod}
+      >
+        <Space direction="vertical">
+          <Radio value={"SHINHAN"}>
+            신한카드, 삼성카드, 롯데카드
+          </Radio>
+        </Space>
+      </Radio.Group>
       <br />
       <br />
       <br />
@@ -307,6 +311,28 @@ function App() {
         }}
       />
       <br />
+      <br />
+      <br />
+      <br />
+
+      <h3>
+        {"POST URL 입력(후잉 입력 시 필수입니다.)"}
+        <br />
+        <a href="https://whooing.com/#main/setting">https://whooing.com/#main/setting</a>
+        <>
+          &nbsp;아래쪽의 <Text code>POST URL로 전달하기(키는 아무거나 무관)</Text> URL을 복사해서 아래에 붙여넣어주세요.
+        </>
+      </h3>
+      <Input
+        size="large"
+        status={isurlValid ? undefined : "warning"}
+        placeholder="POST URL"
+        width={12}
+        value={postUrl}
+        onChange={(e) => {
+          setPostUrl(e.target.value);
+        }}
+      />
       <br />
       <br />
       <br />
