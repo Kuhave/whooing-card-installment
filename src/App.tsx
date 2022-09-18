@@ -2,10 +2,9 @@ import "./App.css";
 import { message, Button, Col, Input, Row, Typography, InputNumber, DatePicker, Radio, Space } from "antd";
 import { map, pipe, toArray, toAsync } from "@fxts/core";
 import { useEffect, useState } from "react";
-import { addMonths, format, parse, startOfDay } from "date-fns";
+import { addMonths, format, parse } from "date-fns";
 
 const { Text } = Typography;
-const style = { padding: "8px 0" };
 
 interface WhooingData {
   entry_date: string;
@@ -18,7 +17,7 @@ interface WhooingData {
 
 type CheckMode = "CLIPBOARD" | "TEMP" | "INPUT";
 
-type CalculateMode = "SHINHAN" | 'SHINHAN';
+type CalculateMode = "SHINHAN" | "SHINHAN";
 
 function App() {
   const [postUrl, setPostUrl] = useState("");
@@ -34,7 +33,7 @@ function App() {
 
   const [calculateMethod, setCalculateMethod] = useState<CalculateMode>("SHINHAN");
 
-  const [debugStr, setDebugStr] = useState("");
+  // const [debugStr, setDebugStr] = useState("");
   const [canContinueClipboard, setCanContinueClipboard] = useState(false);
   const [canContinueTemp, setCanContinueTemp] = useState(false);
   const [canContinueInput, setCanContinueInput] = useState(false);
@@ -43,10 +42,10 @@ function App() {
     setCanContinueTemp(getData("TEMP", true, true) === null ? false : true);
     setCanContinueInput(getData("INPUT", true, true) === null ? false : true);
 
-    const a = getData("CLIPBOARD", true);
-    if (a) {
-      setDebugStr(a);
-    }
+    // const a = getData("CLIPBOARD", true);
+    // if (a) {
+    //   setDebugStr(a);
+    // }
   }, [postUrl, priceStr, isurlValid, price, month, itemName, left, right, memo, date]);
 
   useEffect(() => {
@@ -172,7 +171,6 @@ function App() {
       <h1>후잉 카드할부 입력기</h1>
       <h2>현재 무이자할부 입력만 지원합니다.</h2>
       <h2>현재 페이지에서는 어떠한 개인정보도 수집하지 않습니다.</h2>
-      <h2>신한카드, 삼성카드, 롯데카드</h2>
       <br />
       <br />
       <br />
@@ -191,9 +189,7 @@ function App() {
         value={calculateMethod}
       >
         <Space direction="vertical">
-          <Radio value={"SHINHAN"}>
-            신한카드, 삼성카드, 롯데카드
-          </Radio>
+          <Radio value={"SHINHAN"}>신한카드, 삼성카드, 롯데카드</Radio>
         </Space>
       </Radio.Group>
       <br />
@@ -393,7 +389,7 @@ function App() {
                 if (v.filter((v) => typeof v !== "boolean").length > 0) {
                   message.error(`데이터 전송에 실패하였습니다.`);
                 } else {
-                  message.info(`${v.length}개의 데이터가 임시저장소에 전송되었습니다.`);
+                  message.info(`${v.length}개의 할부거래 데이터가 임시저장소에 전송되었습니다.`);
                 }
               },
             );
@@ -435,7 +431,7 @@ function App() {
                 if (v.filter((v) => typeof v !== "boolean").length > 0) {
                   message.error(`데이터 전송에 실패하였습니다.`);
                 } else {
-                  message.info(`${v.length}개의 데이터가 임시저장소에 전송되었습니다.`);
+                  message.info(`${v.length}개의 할부거래 데이터가 전송되었습니다.`);
                 }
               },
             );
